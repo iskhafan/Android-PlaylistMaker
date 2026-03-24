@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">Playlist Maker</string>
+    <string name="main_scr_header">Playlist maker</string>
+    <string name="main_scr_search_btn_txt">Поиск</string>
+    <string name="main_scr_library_btn_txt">Медиатека</string>
+    <string name="main_scr_settings_btn_txt">Настройки</string>
+    <string name="settings_scr_header">Настройки</string>
+    <string name="settings_scr_theme_select_txt">Тёмная тема</string>
+    <string name="settings_scr_share_txt">Поделиться приложением</string>
+    <string name="settings_scr_support_txt">Написать в поддержку</string>
+    <string name="settings_scr_offert_txt">Пользовательское соглашение</string>
 </resources>
