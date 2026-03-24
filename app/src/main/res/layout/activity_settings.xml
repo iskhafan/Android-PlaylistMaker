@@ -16,9 +16,12 @@
         android:background="@color/white">
 
         <ImageView
+            android:id="@+id/settings_back_btn"
+            android:clickable="true"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:src="@drawable/settings_back_btn_ic"
+            android:foreground="?attr/selectableItemBackground"
             app:tint="@color/black" />
 
         <TextView
