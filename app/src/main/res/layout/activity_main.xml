@@ -28,6 +28,7 @@
         android:orientation="vertical">
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/search_btn"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginBottom="@dimen/btn_margin_bottom"
@@ -46,6 +47,7 @@
             app:iconTint="@color/main_txt_color" />
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/library_btn"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginBottom="@dimen/btn_margin_bottom"
@@ -64,6 +66,7 @@
             app:iconTint="@color/main_txt_color" />
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/settings_btn"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginBottom="@dimen/btn_margin_bottom"
