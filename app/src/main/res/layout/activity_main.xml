@@ -1,31 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/main_background_color"
     android:orientation="vertical"
     android:padding="20dp">
 
-    <FrameLayout
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/main_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start"
-            android:text="@string/main_scr_header"
-            android:textColor="@color/white"
-            android:textSize="23sp"/>
-    </FrameLayout>
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="33dp"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        app:title="@string/main_scr_header"
+        app:titleTextColor="@color/white"
+        app:titleTextAppearance="@style/MainToolbarTitleTextAppearance" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/search_btn"
@@ -44,7 +35,8 @@
             app:icon="@drawable/search_btn_ic"
             app:iconGravity="textStart"
             app:iconSize="@dimen/btn_icon_size"
-            app:iconTint="@color/main_txt_color" />
+            app:iconTint="@color/main_txt_color"
+            android:layout_marginHorizontal="16dp"/>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/library_btn"
@@ -63,7 +55,8 @@
             app:icon="@drawable/library_btn_ic"
             app:iconGravity="textStart"
             app:iconSize="@dimen/btn_icon_size"
-            app:iconTint="@color/main_txt_color" />
+            app:iconTint="@color/main_txt_color"
+            android:layout_marginHorizontal="16dp"/>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/settings_btn"
@@ -82,7 +75,7 @@
             app:icon="@drawable/settings_btn_ic"
             app:iconGravity="textStart"
             app:iconSize="@dimen/btn_icon_size"
-            app:iconTint="@color/main_txt_color" />
+            app:iconTint="@color/main_txt_color"
+            android:layout_marginHorizontal="16dp"/>
 
-    </LinearLayout>
 </LinearLayout>
