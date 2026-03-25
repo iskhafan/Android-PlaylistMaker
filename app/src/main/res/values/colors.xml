@@ -12,4 +12,8 @@
     <color name="settings_txt_color">#1A1B22</color>
     <color name="settings_icon_color">#AEAFB4</color>
     <color name="settings_bg_color">#FFFFFF</color>
+
+    <color name="search_input_field_color">#E6E8EB</color>
+    <color name="search_input_hint_color">#AEAFB4</color>
+    <color name="search_input_clear_btn_color">#AEAFB4</color>
 </resources>

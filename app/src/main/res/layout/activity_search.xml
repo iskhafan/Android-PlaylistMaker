@@ -1,19 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
 
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/settings_bg_color"
     tools:context=".SearchActivity">
 
-    <TextView
-        android:id="@+id/search"
+    <!--        NOTE: Manually select back arrow icon to follow the color of title text-->
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/search_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/settings_bg_color"
+        app:contentInsetStartWithNavigation="0dp"
+        app:navigationIcon="@drawable/settings_back_btn_ic"
+        app:navigationIconTint="@color/settings_txt_color"
+        app:title="@string/search_scr_header"
+        app:titleTextAppearance="@style/SettingsToolbarTitleAppearance"
+        app:titleTextColor="@color/settings_txt_color"/>
+
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/search_bar_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:text="Поиск ещё не реализован... 😪"/>
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        app:cardBackgroundColor="@color/search_input_field_color"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="0dp">
 
-</FrameLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingHorizontal="8dp">
+
+            <ImageView
+                android:id="@+id/search_icon"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/search_ic"
+                android:contentDescription="@string/search_scr_header"
+                app:tint="@color/search_input_hint_color" />
+
+            <EditText
+                android:id="@+id/search_input_field"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginHorizontal="4dp"
+                android:background="@android:color/transparent"
+                android:hint="@string/search_scr_input_hint_txt"
+                android:inputType="text"
+                android:maxLines="1"
+                android:paddingVertical="8dp"
+                android:textColor="@color/main_button_txt_color"
+                android:textColorHint="@color/search_input_hint_color"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:id="@+id/clear_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/clear_ic"
+                android:visibility="gone"
+                app:tint="@color/search_input_clear_btn_color" />
+
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+</LinearLayout>

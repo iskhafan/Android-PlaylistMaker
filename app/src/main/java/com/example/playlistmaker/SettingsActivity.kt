@@ -23,8 +23,6 @@ class SettingsActivity : AppCompatActivity() {
 
         val toolbar = findViewById<MaterialToolbar>(R.id.settings_toolbar)
 
-//        // Optional: set as ActionBar for menu support
-//        setSupportActionBar(toolbar)
 
         // Handle back navigation
         toolbar.setNavigationOnClickListener {
