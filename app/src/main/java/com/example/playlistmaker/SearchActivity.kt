@@ -13,6 +13,12 @@ import androidx.core.view.WindowInsetsCompat
 import com.google.android.material.appbar.MaterialToolbar
 
 class SearchActivity : AppCompatActivity() {
+    private var searchText: String = ""
+
+    companion object {
+        const val SEARCH_INPUT_TEXT = "SEARCH_INPUT_TEXT"
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -35,6 +41,8 @@ class SearchActivity : AppCompatActivity() {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) { }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                searchText = s.toString()
+
                 if (s.isNullOrEmpty()) {
                     clearButton.visibility = android.view.View.GONE
                 } else {
@@ -51,5 +59,18 @@ class SearchActivity : AppCompatActivity() {
             val inputMethodManager  = getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
             inputMethodManager?.hideSoftInputFromWindow(searchInputField.windowToken, 0)
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString(SEARCH_INPUT_TEXT, searchText)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        val value = savedInstanceState.getString(SEARCH_INPUT_TEXT, "")
+        searchText = value
+        val searchInputField = findViewById<EditText>(R.id.search_input_field)
+        searchInputField.setText(value)
     }
 }
