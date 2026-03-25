@@ -11,4 +11,9 @@
     <string name="settings_scr_share_txt">Поделиться приложением</string>
     <string name="settings_scr_support_txt">Написать в поддержку</string>
     <string name="settings_scr_offert_txt">Пользовательское соглашение</string>
+
+    <string name="support_email">student_practicum@yandex.ru</string>
+    <string name="support_msg_title">Сообщение разработчикам и разработчицам приложения Playlist Maker</string>
+    <string name="support_msg_payload">Спасибо разработчикам и разработчицам за крутое приложение!</string>
+    <string name="offert_url">https://yandex.ru/legal/practicum_offer/</string>
 </resources>

@@ -28,16 +28,19 @@
         style="@style/SettingsScreenRowsStyle"/>
 
     <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/share_btn"
         android:text="@string/settings_scr_share_txt"
         android:drawableEnd="@drawable/settings_share_btn_ic"
         style="@style/SettingsScreenRowsStyle"/>
 
     <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/support_btn"
         android:text="@string/settings_scr_support_txt"
         android:drawableEnd="@drawable/settings_support_btn_ic"
         style="@style/SettingsScreenRowsStyle"/>
 
     <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/offert_btn"
         android:text="@string/settings_scr_offert_txt"
         android:drawableEnd="@drawable/settings_fwd_btn_ic"
         style="@style/SettingsScreenRowsStyle"/>
