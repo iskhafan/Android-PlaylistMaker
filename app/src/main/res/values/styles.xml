@@ -2,9 +2,48 @@
 <resources>
     <style name="MainToolbarTitleTextAppearance" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
         <item name="android:textSize">23sp</item>
+        <item name="android:fontFamily">@font/ys_display_medium</item>
     </style>
+
+    <style name="StyleMainScreenToolbar">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="titleTextColor">@color/settings_txt_color</item>
+        <item name="titleTextAppearance">@style/MainToolbarTitleTextAppearance</item>
+    </style>
+
+    <style name="MainScreenButtonStyle" parent="@style/Widget.MaterialComponents.Button.UnelevatedButton">
+        <item name="android:layout_height">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textColor">@color/main_button_txt_color</item>
+        <item name="android:textSize">@dimen/btn_txt_size</item>
+        <item name="android:letterSpacing">0</item>
+        <item name="backgroundTint">@color/main_btn_color</item>
+        <item name="cornerRadius">16dp</item>
+        <item name="iconGravity">textStart</item>
+        <item name="iconSize">@dimen/btn_icon_size</item>
+        <item name="iconTint">@color/main_btn_icon_color</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_marginHorizontal">16dp</item>
+        <item name="android:fontFamily">@font/ys_display_medium</item>
+    </style>
+
+    <style name="SettingsScreenRowsStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:drawablePadding">@dimen/settings_scr_margin</item>
+        <item name="android:textSize">@dimen/settings_scr_txt_size</item>
+        <item name="android:textColor">@color/settings_txt_color</item>
+        <item name="android:paddingHorizontal">@dimen/screen_horizontal_padding</item>
+        <item name="android:paddingVertical">@dimen/settings_scr_padding</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:fontFamily">@font/ys_display_regular</item>
+    </style>
+
     <style name="SettingsToolbarTitleAppearance" parent="TextAppearance.MaterialComponents.Headline6">
         <item name="android:textSize">26sp</item>
-        <item name="android:textColor">@color/black</item>
+        <item name="android:textColor">@color/settings_txt_color</item>
+        <item name="android:fontFamily">@font/ys_display_medium</item>
     </style>
+
 </resources>

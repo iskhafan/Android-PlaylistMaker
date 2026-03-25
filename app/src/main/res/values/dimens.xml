@@ -4,6 +4,7 @@
     <dimen name="btn_icon_size">24dp</dimen>
     <dimen name="btn_margin_bottom">10dp</dimen>
     <dimen name="screen_horizontal_padding">24dp</dimen>
+
     <dimen name="settings_scr_small_icon_size">24dp</dimen>
     <dimen name="settings_scr_txt_size">18sp</dimen>
     <dimen name="settings_scr_margin">16dp</dimen>

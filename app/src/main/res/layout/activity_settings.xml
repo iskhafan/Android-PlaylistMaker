@@ -7,65 +7,39 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/white">
+    android:background="@color/settings_bg_color">
 
+    <!--        NOTE: Manually select back arrow icon to follow the color of title text-->
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/settings_toolbar"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:background="@color/white"
+        android:background="@color/settings_bg_color"
         app:contentInsetStartWithNavigation="0dp"
         app:navigationIcon="@drawable/settings_back_btn_ic"
-        app:navigationIconTint="@color/black"
+        app:navigationIconTint="@color/settings_txt_color"
         app:title="@string/settings_scr_header"
         app:titleTextAppearance="@style/SettingsToolbarTitleAppearance"
-        app:titleTextColor="@color/black"/>
+        app:titleTextColor="@color/settings_txt_color"/>
 
     <com.google.android.material.switchmaterial.SwitchMaterial
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:paddingHorizontal="@dimen/screen_horizontal_padding"
-        android:paddingVertical="@dimen/settings_scr_padding"
         android:text="@string/settings_scr_theme_select_txt"
-        android:textSize="@dimen/settings_scr_txt_size"
-        android:textColor="@color/black"
-        android:checked="true"/>
+        android:checked="true"
+        style="@style/SettingsScreenRowsStyle"/>
 
     <com.google.android.material.textview.MaterialTextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:paddingHorizontal="@dimen/screen_horizontal_padding"
-        android:paddingVertical="@dimen/settings_scr_padding"
         android:text="@string/settings_scr_share_txt"
-        android:textSize="@dimen/settings_scr_txt_size"
-        android:textColor="@color/black"
         android:drawableEnd="@drawable/settings_share_btn_ic"
-        android:drawablePadding="@dimen/settings_scr_margin"/>
+        style="@style/SettingsScreenRowsStyle"/>
 
     <com.google.android.material.textview.MaterialTextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:paddingHorizontal="@dimen/screen_horizontal_padding"
-        android:paddingVertical="@dimen/settings_scr_padding"
         android:text="@string/settings_scr_support_txt"
-        android:textSize="@dimen/settings_scr_txt_size"
-        android:textColor="@color/black"
         android:drawableEnd="@drawable/settings_support_btn_ic"
-        android:drawablePadding="@dimen/settings_scr_margin"/>
+        style="@style/SettingsScreenRowsStyle"/>
 
     <com.google.android.material.textview.MaterialTextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:paddingHorizontal="@dimen/screen_horizontal_padding"
-        android:paddingVertical="@dimen/settings_scr_padding"
         android:text="@string/settings_scr_offert_txt"
-        android:textSize="@dimen/settings_scr_txt_size"
-        android:textColor="@color/black"
         android:drawableEnd="@drawable/settings_fwd_btn_ic"
-        android:drawablePadding="@dimen/settings_scr_margin"/>
+        style="@style/SettingsScreenRowsStyle"/>
 
 </LinearLayout>
