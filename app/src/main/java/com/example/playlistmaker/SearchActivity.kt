@@ -9,15 +9,12 @@ import android.widget.ImageView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
+import androidx.core.widget.doOnTextChanged
 import androidx.core.view.WindowInsetsCompat
 import com.google.android.material.appbar.MaterialToolbar
 
 class SearchActivity : AppCompatActivity() {
     private var searchText: String = ""
-
-    companion object {
-        const val SEARCH_INPUT_TEXT = "SEARCH_INPUT_TEXT"
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,22 +34,17 @@ class SearchActivity : AppCompatActivity() {
         val searchInputField = findViewById<EditText>(R.id.search_input_field)
         val clearButton = findViewById<ImageView>(R.id.clear_button)
 
-        val searchTextWatcher = object : android.text.TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) { }
+        // Overwrining only text changed evt with lambda
+        searchInputField.doOnTextChanged { text, _, _, _ ->
+            searchText = text.toString()
 
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                searchText = s.toString()
-
-                if (s.isNullOrEmpty()) {
-                    clearButton.visibility = android.view.View.GONE
-                } else {
-                    clearButton.visibility = android.view.View.VISIBLE
-                }
+            if (text.isNullOrEmpty()) {
+                clearButton.visibility = android.view.View.GONE
+            } else {
+                clearButton.visibility = android.view.View.VISIBLE
             }
-
-            override fun afterTextChanged(s: android.text.Editable?) { }
         }
-        searchInputField.addTextChangedListener(searchTextWatcher)
+
         clearButton.setOnClickListener {
             searchInputField.text.clear()
             // Hiding keyboard
@@ -72,5 +64,9 @@ class SearchActivity : AppCompatActivity() {
         searchText = value
         val searchInputField = findViewById<EditText>(R.id.search_input_field)
         searchInputField.setText(value)
+    }
+
+    companion object {
+        const val SEARCH_INPUT_TEXT = "SEARCH_INPUT_TEXT"
     }
 }

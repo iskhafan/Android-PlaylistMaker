@@ -17,7 +17,7 @@
         android:layout_height="60dp"
         android:background="@color/settings_bg_color"
         app:contentInsetStartWithNavigation="0dp"
-        app:navigationIcon="@drawable/settings_back_btn_ic"
+        app:navigationIcon="@drawable/ic_title_back_btn_48"
         app:navigationIconTint="@color/settings_txt_color"
         app:title="@string/search_scr_header"
         app:titleTextAppearance="@style/SettingsToolbarTitleAppearance"
@@ -28,33 +28,40 @@
         android:id="@+id/search_bar_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
+        android:layout_marginVertical="8dp"
         app:cardBackgroundColor="@color/search_input_field_color"
         app:cardCornerRadius="10dp"
         app:cardElevation="0dp">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="42dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingHorizontal="8dp">
 
-            <ImageView
-                android:id="@+id/search_icon"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/search_ic"
-                android:contentDescription="@string/search_scr_header"
-                app:tint="@color/search_input_hint_color" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingHorizontal="8dp">
+
+        <ImageView
+            android:id="@+id/search_icon"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_search_16"
+            android:layout_marginStart="8dp"
+            android:contentDescription="@string/search_scr_header"
+            app:tint="@color/search_input_hint_color" />
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:layout_marginStart="4dp">
 
             <EditText
                 android:id="@+id/search_input_field"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_marginHorizontal="4dp"
                 android:background="@android:color/transparent"
                 android:hint="@string/search_scr_input_hint_txt"
@@ -69,10 +76,13 @@
                 android:id="@+id/clear_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/clear_ic"
+                android:layout_gravity="end|center_vertical"
+                android:layout_marginEnd="4dp"
+                android:src="@drawable/ic_clear_16"
                 android:visibility="gone"
                 app:tint="@color/search_input_clear_btn_color" />
 
+        </FrameLayout>
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 

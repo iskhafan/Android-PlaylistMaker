@@ -16,33 +16,35 @@
         android:layout_height="60dp"
         android:background="@color/settings_bg_color"
         app:contentInsetStartWithNavigation="0dp"
-        app:navigationIcon="@drawable/settings_back_btn_ic"
+        app:navigationIcon="@drawable/ic_title_back_btn_48"
         app:navigationIconTint="@color/settings_txt_color"
         app:title="@string/settings_scr_header"
         app:titleTextAppearance="@style/SettingsToolbarTitleAppearance"
         app:titleTextColor="@color/settings_txt_color"/>
 
+<!--NOTE: Added extra gap between title and lower layout elements-->
     <com.google.android.material.switchmaterial.SwitchMaterial
         android:text="@string/settings_scr_theme_select_txt"
         android:checked="true"
-        style="@style/SettingsScreenRowsStyle"/>
+        style="@style/SettingsScreenRowsStyle"
+        android:layout_marginTop="24dp"/>
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/share_btn"
         android:text="@string/settings_scr_share_txt"
-        android:drawableEnd="@drawable/settings_share_btn_ic"
+        android:drawableEnd="@drawable/ic_settings_share_btn_24"
         style="@style/SettingsScreenRowsStyle"/>
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/support_btn"
         android:text="@string/settings_scr_support_txt"
-        android:drawableEnd="@drawable/settings_support_btn_ic"
+        android:drawableEnd="@drawable/ic_settings_support_btn_24"
         style="@style/SettingsScreenRowsStyle"/>
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/offert_btn"
         android:text="@string/settings_scr_offert_txt"
-        android:drawableEnd="@drawable/settings_fwd_btn_ic"
+        android:drawableEnd="@drawable/ic_settings_fwd_btn_24"
         style="@style/SettingsScreenRowsStyle"/>
 
 </LinearLayout>

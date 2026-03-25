@@ -23,7 +23,7 @@
             android:layout_marginBottom="@dimen/btn_margin_bottom"
             android:text="@string/main_scr_search_btn_txt"
 
-            app:icon="@drawable/search_btn_ic"
+            app:icon="@drawable/ic_search_btn_24"
             style="@style/MainScreenButtonStyle"/>
 
         <com.google.android.material.button.MaterialButton
@@ -31,7 +31,7 @@
             android:layout_marginBottom="@dimen/btn_margin_bottom"
             android:text="@string/main_scr_library_btn_txt"
 
-            app:icon="@drawable/library_btn_ic"
+            app:icon="@drawable/ic_library_btn_24"
             style="@style/MainScreenButtonStyle"/>
 
         <com.google.android.material.button.MaterialButton
@@ -39,7 +39,7 @@
             android:layout_marginBottom="@dimen/btn_margin_bottom"
             android:text="@string/main_scr_settings_btn_txt"
 
-            app:icon="@drawable/settings_btn_ic"
+            app:icon="@drawable/ic_settings_btn_24"
             style="@style/MainScreenButtonStyle"/>
 
 </LinearLayout>
