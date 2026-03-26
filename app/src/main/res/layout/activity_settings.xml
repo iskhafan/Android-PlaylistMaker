@@ -13,7 +13,7 @@
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/settings_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="56dp"
         android:background="@color/settings_bg_color"
         app:contentInsetStartWithNavigation="0dp"
         app:navigationIcon="@drawable/ic_title_back_btn_48"
