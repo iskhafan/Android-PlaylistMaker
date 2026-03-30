@@ -19,4 +19,5 @@
 
     <color name="search_track_name_color">#000000</color>
     <color name="search_track_info_color">#AEAFB4</color>
+    <color name="search_fwd_icon_color">#AEAFB4</color>
 </resources>
