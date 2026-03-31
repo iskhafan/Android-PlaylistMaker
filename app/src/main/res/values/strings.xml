@@ -20,4 +20,8 @@
     <string name="search_scr_input_hint_txt">Поиск</string>
 
     <string name="search_scr_header">Поиск</string>
+    <string name="search_scr_track_name_placeholder_txt">Track Name</string>
+    <string name="search_scr_track_author_placeholder_txt">Artist Name</string>
+    <string name="search_scr_track_info_separator_placeholder_txt">•</string>
+    <string name="search_scr_track_duration_placeholder_txt">1:23</string>
 </resources>
