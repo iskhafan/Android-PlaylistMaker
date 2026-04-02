@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 
 class Adapter(
-    private val items: List<Track>
+    private var items: List<Track> = emptyList()
 ) : RecyclerView.Adapter<ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -22,5 +22,10 @@ class Adapter(
 
     override fun getItemCount(): Int {
         return items.size
+    }
+
+    fun submitList(newItems: List<Track>) {
+        this.items = newItems
+        notifyDataSetChanged()
     }
 }

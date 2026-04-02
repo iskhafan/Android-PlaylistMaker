@@ -20,4 +20,6 @@
     <color name="search_track_name_color">#FFFFFF</color>
     <color name="search_track_info_color">#FFFFFF</color>
     <color name="search_fwd_icon_color">#AEAFB4</color>
+
+    <color name="search_melody_icon_color">#FFFFFF</color>
 </resources>
