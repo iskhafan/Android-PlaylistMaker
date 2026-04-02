@@ -126,7 +126,8 @@
             android:textSize="14sp"
             android:textAllCaps="false"
             app:fontFamily="@font/ys_display_medium"
-            app:backgroundTint="@color/search_track_name_color" />
+            app:backgroundTint="@color/search_track_name_color"
+            app:cornerRadius="24dp"/>
     </LinearLayout>
 
     <!-- Not found splash screen -->

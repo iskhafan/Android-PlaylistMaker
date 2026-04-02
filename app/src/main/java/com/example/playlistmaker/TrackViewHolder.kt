@@ -10,7 +10,7 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+class TrackViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private val trackArtwork: ImageView = itemView.findViewById(R.id.track_artwork)
     private val trackName: TextView = itemView.findViewById(R.id.track_name)
     private val trackArtist: TextView = itemView.findViewById(R.id.track_artist)

@@ -27,15 +27,14 @@ class SearchActivity : AppCompatActivity() {
     private var searchText: String = ""
     private var lastQuery: String = ""
 
-    private val baseUrl = "https://itunes.apple.com"
     private val retrofit = Retrofit.Builder()
-        .baseUrl(baseUrl)
+        .baseUrl(BASE_URL)
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
     private val api = retrofit.create(TrackListApi::class.java)
 
-    lateinit var adapter: Adapter
+    lateinit var adapter: TrackAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -59,7 +58,7 @@ class SearchActivity : AppCompatActivity() {
         val clearButton = findViewById<ImageView>(R.id.clear_button)
 
         // Initialize Adapter
-        adapter = Adapter(emptyList())
+        adapter = TrackAdapter(emptyList())
         recyclerView.adapter = adapter
 
         // Handle cross clear text icon press evt
@@ -118,9 +117,6 @@ class SearchActivity : AppCompatActivity() {
                                 // If tracks present reading into our struct
                                 val tracks = data.results.map { result ->
                                     val timeInMs = result.trackTime
-                                    val time = SimpleDateFormat("mm:ss", Locale.getDefault()).format(
-                                        Date(timeInMs)
-                                    )
 
                                     Track(
                                         trackName = result.trackName,
@@ -191,5 +187,6 @@ class SearchActivity : AppCompatActivity() {
     companion object {
         const val SEARCH_INPUT_TEXT = "SEARCH_INPUT_TEXT"
         const val LAST_QUERY_TEXT = "LAST_QUERY_TEXT"
+        const val BASE_URL = "https://itunes.apple.com"
     }
 }
