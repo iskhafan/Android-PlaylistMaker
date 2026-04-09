@@ -3,9 +3,6 @@ package com.example.playlistmaker
 import android.app.Application
 import androidx.appcompat.app.AppCompatDelegate
 
-const val THEME_PARAM_NAME = "visual_theme"
-const val KEY_DARK_THEME = "is_dark"
-
 class App : Application() {
 
     var darkTheme = false
@@ -36,6 +33,11 @@ class App : Application() {
                 AppCompatDelegate.MODE_NIGHT_NO
             }
         )
+    }
+
+    companion object {
+        private const val THEME_PARAM_NAME = "visual_theme"
+        private const val KEY_DARK_THEME = "is_dark"
     }
 
 }

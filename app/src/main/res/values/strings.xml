@@ -27,4 +27,6 @@
     <string name="search_scr_not_found_txt">Ничего не нашлось</string>
     <string name="search_scr_conn_err_txt">Проблемы со связью\n\nЗагрузка не удалась. Проверьте подключение к интернету</string>
     <string name="search_scr_redo_btn_txt">Обновить</string>
+    <string name="search_scr_clr_hist_btn_txt">Очистить историю</string>
+    <string name="search_scr_hist_header_txt">Вы искали</string>
 </resources>
