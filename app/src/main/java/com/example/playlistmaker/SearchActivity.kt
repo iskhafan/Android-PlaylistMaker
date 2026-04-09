@@ -14,6 +14,7 @@ import androidx.core.widget.doOnTextChanged
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.MaterialToolbar
+import com.google.android.material.button.MaterialButton
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Retrofit
@@ -36,6 +37,12 @@ class SearchActivity : AppCompatActivity() {
 
     lateinit var adapter: TrackAdapter
 
+    lateinit var noFoundPlaceholder: LinearLayout
+    lateinit var trackList: RecyclerView
+    lateinit var connErrorPlaceholder: LinearLayout
+    lateinit var refreshButton: MaterialButton
+    lateinit var searchInputField: EditText
+
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
@@ -46,7 +53,6 @@ class SearchActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        val recyclerView = findViewById<RecyclerView>(R.id.tracks_recycler_view)
 
         val toolbar = findViewById<MaterialToolbar>(R.id.search_toolbar)
         // Handle back navigation
@@ -54,12 +60,16 @@ class SearchActivity : AppCompatActivity() {
             finish()
         }
 
-        val searchInputField = findViewById<EditText>(R.id.search_input_field)
         val clearButton = findViewById<ImageView>(R.id.clear_button)
+
+        noFoundPlaceholder = findViewById<LinearLayout>(R.id.nothing_found_placeholder)
+        trackList = findViewById<RecyclerView>(R.id.tracks_recycler_view)
+        connErrorPlaceholder = findViewById<LinearLayout>(R.id.connection_error_placeholder)
+        refreshButton = findViewById<MaterialButton>(R.id.refresh_button)
+        searchInputField = findViewById<EditText>(R.id.search_input_field)
 
         // Initialize Adapter
         adapter = TrackAdapter(emptyList())
-        recyclerView.adapter = adapter
 
         // Handle cross clear text icon press evt
         clearButton.setOnClickListener {
@@ -94,8 +104,8 @@ class SearchActivity : AppCompatActivity() {
             }
         }
 
-        recyclerView.adapter = adapter
-        recyclerView.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this)
+        trackList.adapter = adapter
+        trackList.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this)
     }
 
     private fun performSearch() {
@@ -107,35 +117,7 @@ class SearchActivity : AppCompatActivity() {
             api.searchTracks(searchText).enqueue(object : Callback<SearchResponse> {
                 override fun onResponse(call: Call<SearchResponse>, response: Response<SearchResponse>) {
                     // Checking response status
-                    if (response.isSuccessful) {
-                        response.body()?.let { data ->
-                            // Handling Track Not Found evt
-                            if (data.results.isEmpty()) {
-                                showNotFoundPlaceholder()
-                                adapter.submitList(emptyList())
-                            } else {
-                                // If tracks present reading into our struct
-                                val tracks = data.results.map { result ->
-                                    val timeInMs = result.trackTime
-
-                                    Track(
-                                        trackName = result.trackName,
-                                        artistName = result.artistName,
-                                        trackTime = timeInMs,
-                                        artworkUrl100 = result.artworkUrl100
-                                    )
-                                }
-                                adapter.submitList(tracks)
-                                hideErrorPlaceholder()
-                            }
-                        } ?: run {
-                            // Handling empty response body (but status OK)
-                            showErrorPlaceholder()
-                        }
-                    } else {
-                        // Handling server/communication error
-                        showErrorPlaceholder()
-                    }
+                    processResponse(response)
                 }
 
                 override fun onFailure(call: Call<SearchResponse>, t: Throwable) {
@@ -146,26 +128,56 @@ class SearchActivity : AppCompatActivity() {
         }
     }
 
-    private fun showNotFoundPlaceholder() {
+    private fun processResponse(response:Response<SearchResponse>) {
+        if (response.isSuccessful) {
+            response.body()?.let { data ->
+                // Handling Track Not Found evt
+                if (data.results.isEmpty()) {
+                    showNotFoundPlaceholder()
+                    adapter.submitList(emptyList())
+                } else {
+                    // If tracks present reading into our struct
+                    val tracks = data.results.map { result ->
+                        val timeInMs = result.trackTime
 
-        findViewById<LinearLayout>(R.id.nothing_found_placeholder).visibility = View.VISIBLE
-        findViewById<RecyclerView>(R.id.tracks_recycler_view).visibility = View.GONE
-        findViewById<LinearLayout>(R.id.connection_error_placeholder).visibility = View.GONE
+                        Track(
+                            trackName = result.trackName,
+                            artistName = result.artistName,
+                            trackTime = timeInMs,
+                            artworkUrl100 = result.artworkUrl100
+                        )
+                    }
+                    adapter.submitList(tracks)
+                    hideErrorPlaceholder()
+                }
+            } ?: run {
+                // Handling empty response body (but status OK)
+                showErrorPlaceholder()
+            }
+        } else {
+            // Handling server/communication error
+            showErrorPlaceholder()
+        }
+    }
+
+    private fun showNotFoundPlaceholder() {
+        noFoundPlaceholder.visibility = View.VISIBLE
+        trackList.visibility = View.GONE
+        connErrorPlaceholder.visibility = View.GONE
     }
 
     private fun showErrorPlaceholder() {
-        findViewById<LinearLayout>(R.id.connection_error_placeholder).visibility = View.VISIBLE
-        findViewById<RecyclerView>(R.id.tracks_recycler_view).visibility = View.GONE
-        findViewById<LinearLayout>(R.id.nothing_found_placeholder).visibility = View.GONE
+        connErrorPlaceholder.visibility = View.VISIBLE
+        trackList.visibility = View.GONE
+        noFoundPlaceholder.visibility = View.GONE
 
-        findViewById<com.google.android.material.button.MaterialButton>(R.id.refresh_button)
-            .setOnClickListener { performSearch() }
+        refreshButton.setOnClickListener { performSearch() }
     }
 
     private fun hideErrorPlaceholder() {
-        findViewById<LinearLayout>(R.id.nothing_found_placeholder).visibility = View.GONE
-        findViewById<LinearLayout>(R.id.connection_error_placeholder).visibility = View.GONE
-        findViewById<RecyclerView>(R.id.tracks_recycler_view).visibility = View.VISIBLE
+        noFoundPlaceholder.visibility = View.GONE
+        connErrorPlaceholder.visibility = View.GONE
+        trackList.visibility = View.VISIBLE
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -180,7 +192,6 @@ class SearchActivity : AppCompatActivity() {
         searchText = value
         val lastQueryVal = savedInstanceState.getString(LAST_QUERY_TEXT, "")
         lastQuery = lastQueryVal
-        val searchInputField = findViewById<EditText>(R.id.search_input_field)
         searchInputField.setText(value)
     }
 
