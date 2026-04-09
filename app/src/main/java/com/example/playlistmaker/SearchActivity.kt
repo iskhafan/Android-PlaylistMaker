@@ -9,6 +9,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.ViewCompat
 import androidx.core.widget.doOnTextChanged
 import androidx.core.view.WindowInsetsCompat
@@ -20,9 +21,6 @@ import retrofit2.Callback
 import retrofit2.Retrofit
 import retrofit2.Response
 import retrofit2.converter.gson.GsonConverterFactory
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
 
 class SearchActivity : AppCompatActivity() {
     private var searchText: String = ""
@@ -43,7 +41,7 @@ class SearchActivity : AppCompatActivity() {
     lateinit var refreshButton: MaterialButton
     lateinit var searchInputField: EditText
 
-    lateinit var historyContainer: LinearLayout
+    lateinit var historyContainer: ConstraintLayout
     lateinit var historyRecyclerView: RecyclerView
     lateinit var historyAdapter: TrackAdapter
     lateinit var clearHistoryButton: MaterialButton
@@ -103,7 +101,11 @@ class SearchActivity : AppCompatActivity() {
             val imm: InputMethodManager? = getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
             imm?.hideSoftInputFromWindow(searchInputField.windowToken, 0)
             trackAdapter.submitList(emptyList())
-            hideErrorPlaceholder()
+
+            trackList.visibility = View.GONE
+            connErrorPlaceholder.visibility = View.GONE
+            noFoundPlaceholder.visibility = View.GONE
+
             // Showing history on pressing cross button
             updateHistoryVisibility()
         }
@@ -144,10 +146,7 @@ class SearchActivity : AppCompatActivity() {
         }
 
         trackList.adapter = trackAdapter
-        trackList.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this)
-
         historyRecyclerView.adapter = historyAdapter
-        historyRecyclerView.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this)
     }
 
     private fun performSearch() {
@@ -191,7 +190,11 @@ class SearchActivity : AppCompatActivity() {
                         )
                     }
                     trackAdapter.submitList(tracks)
-                    hideErrorPlaceholder()
+
+                    historyContainer.visibility = View.GONE
+                    connErrorPlaceholder.visibility = View.GONE
+                    noFoundPlaceholder.visibility = View.GONE
+                    trackList.visibility = View.VISIBLE
                 }
             } ?: run {
                 // Handling empty response body (but status OK)
@@ -207,20 +210,16 @@ class SearchActivity : AppCompatActivity() {
         noFoundPlaceholder.visibility = View.VISIBLE
         trackList.visibility = View.GONE
         connErrorPlaceholder.visibility = View.GONE
+        historyContainer.visibility = View.GONE
     }
 
     private fun showErrorPlaceholder() {
         connErrorPlaceholder.visibility = View.VISIBLE
         trackList.visibility = View.GONE
         noFoundPlaceholder.visibility = View.GONE
+        historyContainer.visibility = View.GONE
 
         refreshButton.setOnClickListener { performSearch() }
-    }
-
-    private fun hideErrorPlaceholder() {
-        noFoundPlaceholder.visibility = View.GONE
-        connErrorPlaceholder.visibility = View.GONE
-        trackList.visibility = View.VISIBLE
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -248,6 +247,10 @@ class SearchActivity : AppCompatActivity() {
             historyContainer.visibility = View.VISIBLE
             // Update the history adapter with the latest data from SharedPreferences
             historyAdapter.submitList(searchHistory.getHistory())
+
+            trackList.visibility = View.GONE
+            connErrorPlaceholder.visibility = View.GONE
+            noFoundPlaceholder.visibility = View.GONE
         } else {
             historyContainer.visibility = View.GONE
         }
