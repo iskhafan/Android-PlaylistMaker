@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.android.material.appbar.MaterialToolbar
+import com.google.android.material.switchmaterial.SwitchMaterial
 
 class SettingsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,9 +30,16 @@ class SettingsActivity : AppCompatActivity() {
             finish()
         }
 
+        val themeSwitcher = findViewById<SwitchMaterial>(R.id.themeSwitcher)
         val shareButton = findViewById<TextView>(R.id.share_btn)
         val supportButton = findViewById<TextView>(R.id.support_btn)
         val offerButton = findViewById<TextView>(R.id.offert_btn)
+
+        val app = applicationContext as App
+        themeSwitcher.isChecked = app.darkTheme
+        themeSwitcher.setOnCheckedChangeListener { _, checked ->
+            app.switchTheme(checked)
+        }
 
         shareButton.setOnClickListener {
             val shareIntent = Intent(Intent.ACTION_SEND)

@@ -24,8 +24,8 @@
 
 <!--NOTE: Added extra gap between title and lower layout elements-->
     <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/themeSwitcher"
         android:text="@string/settings_scr_theme_select_txt"
-        android:checked="true"
         style="@style/SettingsScreenRowsStyle"
         android:layout_marginTop="24dp"/>
 

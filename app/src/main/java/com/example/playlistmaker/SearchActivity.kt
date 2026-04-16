@@ -9,6 +9,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.ViewCompat
 import androidx.core.widget.doOnTextChanged
 import androidx.core.view.WindowInsetsCompat
@@ -20,9 +21,6 @@ import retrofit2.Callback
 import retrofit2.Retrofit
 import retrofit2.Response
 import retrofit2.converter.gson.GsonConverterFactory
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
 
 class SearchActivity : AppCompatActivity() {
     private var searchText: String = ""
@@ -35,13 +33,19 @@ class SearchActivity : AppCompatActivity() {
 
     private val api = retrofit.create(TrackListApi::class.java)
 
-    lateinit var adapter: TrackAdapter
+    lateinit var trackAdapter: TrackAdapter
 
     lateinit var noFoundPlaceholder: LinearLayout
     lateinit var trackList: RecyclerView
     lateinit var connErrorPlaceholder: LinearLayout
     lateinit var refreshButton: MaterialButton
     lateinit var searchInputField: EditText
+
+    lateinit var historyContainer: ConstraintLayout
+    lateinit var historyRecyclerView: RecyclerView
+    lateinit var historyAdapter: TrackAdapter
+    lateinit var clearHistoryButton: MaterialButton
+    lateinit var searchHistory: SearchHistory
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -68,8 +72,27 @@ class SearchActivity : AppCompatActivity() {
         refreshButton = findViewById<MaterialButton>(R.id.refresh_button)
         searchInputField = findViewById<EditText>(R.id.search_input_field)
 
-        // Initialize Adapter
-        adapter = TrackAdapter(emptyList())
+        historyContainer = findViewById(R.id.history_container)
+        historyRecyclerView = findViewById(R.id.history_recycler_view)
+        clearHistoryButton = findViewById(R.id.clear_history_button)
+
+        searchHistory = SearchHistory(getSharedPreferences(SEARCH_HISTORY_PREFS_NAME, MODE_PRIVATE))
+
+        // Initialize Adapter for search results
+        trackAdapter = TrackAdapter(emptyList(), object : OnTrackClickListener {
+            override fun onTrackClicked(track: Track) {
+                // Adding new track into history list
+                searchHistory.addTrack(track)
+                historyAdapter.submitList(searchHistory.getHistory())
+                updateHistoryVisibility()
+            }
+        })
+        // Initialize Adapter for history of tracks
+        historyAdapter = TrackAdapter(emptyList(), object : OnTrackClickListener {
+            override fun onTrackClicked(track: Track) {
+                // For now no need to handle presses on tracks history items
+            }
+        })
 
         // Handle cross clear text icon press evt
         clearButton.setOnClickListener {
@@ -77,8 +100,14 @@ class SearchActivity : AppCompatActivity() {
 
             val imm: InputMethodManager? = getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
             imm?.hideSoftInputFromWindow(searchInputField.windowToken, 0)
-            adapter.submitList(emptyList())
-            hideErrorPlaceholder()
+            trackAdapter.submitList(emptyList())
+
+            trackList.visibility = View.GONE
+            connErrorPlaceholder.visibility = View.GONE
+            noFoundPlaceholder.visibility = View.GONE
+
+            // Showing history on pressing cross button
+            updateHistoryVisibility()
         }
 
 
@@ -91,6 +120,8 @@ class SearchActivity : AppCompatActivity() {
             } else {
                 clearButton.visibility = android.view.View.VISIBLE
             }
+            // Showing history if text editing results in empty string
+            updateHistoryVisibility()
         }
 
         // Handle virtual keyboard Enter button press
@@ -104,8 +135,18 @@ class SearchActivity : AppCompatActivity() {
             }
         }
 
-        trackList.adapter = adapter
-        trackList.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this)
+        searchInputField.setOnFocusChangeListener { _, hasFocus ->
+            updateHistoryVisibility()
+        }
+
+        clearHistoryButton.setOnClickListener {
+            searchHistory.clearHistory()
+            historyAdapter.submitList(emptyList())
+            updateHistoryVisibility()
+        }
+
+        trackList.adapter = trackAdapter
+        historyRecyclerView.adapter = historyAdapter
     }
 
     private fun performSearch() {
@@ -134,7 +175,7 @@ class SearchActivity : AppCompatActivity() {
                 // Handling Track Not Found evt
                 if (data.results.isEmpty()) {
                     showNotFoundPlaceholder()
-                    adapter.submitList(emptyList())
+                    trackAdapter.submitList(emptyList())
                 } else {
                     // If tracks present reading into our struct
                     val tracks = data.results.map { result ->
@@ -144,11 +185,16 @@ class SearchActivity : AppCompatActivity() {
                             trackName = result.trackName,
                             artistName = result.artistName,
                             trackTime = timeInMs,
-                            artworkUrl100 = result.artworkUrl100
+                            artworkUrl100 = result.artworkUrl100,
+                            trackId = result.trackId
                         )
                     }
-                    adapter.submitList(tracks)
-                    hideErrorPlaceholder()
+                    trackAdapter.submitList(tracks)
+
+                    historyContainer.visibility = View.GONE
+                    connErrorPlaceholder.visibility = View.GONE
+                    noFoundPlaceholder.visibility = View.GONE
+                    trackList.visibility = View.VISIBLE
                 }
             } ?: run {
                 // Handling empty response body (but status OK)
@@ -164,20 +210,16 @@ class SearchActivity : AppCompatActivity() {
         noFoundPlaceholder.visibility = View.VISIBLE
         trackList.visibility = View.GONE
         connErrorPlaceholder.visibility = View.GONE
+        historyContainer.visibility = View.GONE
     }
 
     private fun showErrorPlaceholder() {
         connErrorPlaceholder.visibility = View.VISIBLE
         trackList.visibility = View.GONE
         noFoundPlaceholder.visibility = View.GONE
+        historyContainer.visibility = View.GONE
 
         refreshButton.setOnClickListener { performSearch() }
-    }
-
-    private fun hideErrorPlaceholder() {
-        noFoundPlaceholder.visibility = View.GONE
-        connErrorPlaceholder.visibility = View.GONE
-        trackList.visibility = View.VISIBLE
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -195,9 +237,30 @@ class SearchActivity : AppCompatActivity() {
         searchInputField.setText(value)
     }
 
+    private fun updateHistoryVisibility() {
+        // Condition: Focus is TRUE AND text is EMPTY AND history is NOT EMPTY
+        val isFocused = searchInputField.hasFocus()
+        val isTextEmpty = searchInputField.text.isEmpty()
+        val hasHistory = searchHistory.getHistory().isNotEmpty()
+
+        if (isFocused && isTextEmpty && hasHistory) {
+            historyContainer.visibility = View.VISIBLE
+            // Update the history adapter with the latest data from SharedPreferences
+            historyAdapter.submitList(searchHistory.getHistory())
+
+            trackList.visibility = View.GONE
+            connErrorPlaceholder.visibility = View.GONE
+            noFoundPlaceholder.visibility = View.GONE
+        } else {
+            historyContainer.visibility = View.GONE
+        }
+    }
+
     companion object {
         const val SEARCH_INPUT_TEXT = "SEARCH_INPUT_TEXT"
         const val LAST_QUERY_TEXT = "LAST_QUERY_TEXT"
         const val BASE_URL = "https://itunes.apple.com"
+
+        private const val SEARCH_HISTORY_PREFS_NAME = "search_history_prefs"
     }
 }
