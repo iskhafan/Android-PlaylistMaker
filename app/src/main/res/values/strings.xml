@@ -29,4 +29,11 @@
     <string name="search_scr_redo_btn_txt">Обновить</string>
     <string name="search_scr_clr_hist_btn_txt">Очистить историю</string>
     <string name="search_scr_hist_header_txt">Вы искали</string>
+
+    <string name="player_scr_timecode_placeholder_txt">0:00</string>
+    <string name="player_scr_duration_key_txt">Длительность</string>
+    <string name="player_scr_album_key_txt">Альбом</string>
+    <string name="player_scr_year_key_txt">Год</string>
+    <string name="player_scr_genre_key_txt">Жанр</string>
+    <string name="player_scr_country_key_txt">Страна</string>
 </resources>

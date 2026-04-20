@@ -31,9 +31,9 @@
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/share_btn"
-        android:text="@string/settings_scr_share_txt"
+        style="@style/SettingsScreenRowsStyle"
         android:drawableEnd="@drawable/ic_settings_share_btn_24"
-        style="@style/SettingsScreenRowsStyle"/>
+        android:text="@string/settings_scr_share_txt" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/support_btn"
