@@ -22,4 +22,12 @@
     <color name="search_fwd_icon_color">#AEAFB4</color>
 
     <color name="search_melody_icon_color">#FFFFFF</color>
+
+    <color name="player_primary_button_color">#FFFFFF</color>
+    <color name="player_secondary_button_color">#FFFFFF</color>
+    <color name="player_secondary_button_inner_color">#FFFFFF</color>
+
+    <color name="player_bg_color">#1A1B22</color>
+    <color name="player_primary_text_color">#FFFFFF</color>
+    <color name="player_secondary_text_color">#AEAFB4</color>
 </resources>

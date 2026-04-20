@@ -1,6 +1,7 @@
 package com.example.playlistmaker
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -81,6 +82,12 @@ class SearchActivity : AppCompatActivity() {
         // Initialize Adapter for search results
         trackAdapter = TrackAdapter(emptyList(), object : OnTrackClickListener {
             override fun onTrackClicked(track: Track) {
+                // Switching to a Player Screen
+                val intent = Intent(this@SearchActivity, PlayerActivity::class.java).apply {
+                    putExtra(PlayerActivity.EXTRA_TRACK, track)
+                }
+                startActivity(intent)
+
                 // Adding new track into history list
                 searchHistory.addTrack(track)
                 historyAdapter.submitList(searchHistory.getHistory())
@@ -90,7 +97,11 @@ class SearchActivity : AppCompatActivity() {
         // Initialize Adapter for history of tracks
         historyAdapter = TrackAdapter(emptyList(), object : OnTrackClickListener {
             override fun onTrackClicked(track: Track) {
-                // For now no need to handle presses on tracks history items
+                // Switching to Playlist screen
+                val intent = Intent(this@SearchActivity, PlayerActivity::class.java).apply {
+                    putExtra(PlayerActivity.EXTRA_TRACK, track)
+                }
+                startActivity(intent)
             }
         })
 
@@ -186,7 +197,11 @@ class SearchActivity : AppCompatActivity() {
                             artistName = result.artistName,
                             trackTime = timeInMs,
                             artworkUrl100 = result.artworkUrl100,
-                            trackId = result.trackId
+                            trackId = result.trackId,
+                            collectionName = result.collectionName,
+                            releaseDate = result.releaseDate,
+                            primaryGenreName = result.primaryGenreName,
+                            country = result.country
                         )
                     }
                     trackAdapter.submitList(tracks)
